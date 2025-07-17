@@ -1,13 +1,12 @@
 
 import './App.css'
+import { PostList } from './components/PostList'
 
 function App() {
 
   return (
     <>
-      <p>This is a paragraph</p>
-      <button>Click me</button>
-      <h1>Hello World</h1>
+      <PostList />
     </>
   )
 }
