@@ -6,14 +6,11 @@ import { Modal } from "./Modal"
 import type { FormData } from "../schemas/post.schema"
 
 export const PostList = ({isModalOpen, closeModal}: {isModalOpen: boolean, closeModal: () => void}) => {
-    const [enteredBody, setEnteredBody] = useState<string[]>([]) 
-    const [enteredAuthor, setEnteredAuthor] = useState<string[]>([]) 
+    const [posts, setPosts] = useState<FormData[]>([]) 
 
-    const postCreatedHandler = ({author, body}: FormData) => {
-        setEnteredBody([...enteredBody, body])
-        setEnteredAuthor([...enteredAuthor, author])
+    const postCreatedHandler = (data: FormData) => {
+        setPosts([...posts, data])
     }
-
 
     return (
         <>
@@ -25,11 +22,11 @@ export const PostList = ({isModalOpen, closeModal}: {isModalOpen: boolean, close
             )
         }
        { 
-        enteredAuthor.length > 0 ? (
+        posts.length > 0 ? (
             <ul className={classes.posts}>
             {
-                enteredAuthor.map((author, index) => (
-                    <Post author={author} text={enteredBody[index]}/>
+                posts.map((post, index) => (
+                    <Post key={index} author={post.author} text={post.body}/>
                 ))
             }
             
