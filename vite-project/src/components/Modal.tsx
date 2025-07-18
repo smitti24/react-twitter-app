@@ -3,12 +3,13 @@ import { type ReactNode } from 'react'
 
 interface ModalProps {
     children: ReactNode
+    onModalClose: () => void
 }
 
-export const Modal = ({ children }: ModalProps) => {
+export const Modal = ({ children, onModalClose }: ModalProps) => {
     return (
         <>
-            <div className={classes.backdrop}>
+            <div className={classes.backdrop} onClick={onModalClose}>
 
            </div>
            <dialog open className={classes.modal}>{children}</dialog>

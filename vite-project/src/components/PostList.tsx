@@ -3,29 +3,42 @@ import { NewPost } from "./NewPost"
 import { Post } from "./Post"
 import classes from './PostList.module.css'
 import { Modal } from "./Modal"
+import type { FormData } from "../schemas/post.schema"
 
-export const PostList = () => {
-    const [enteredBody, setEnteredBody] = useState('')
-    const [enteredAuthor, setEnteredAuthor] = useState('')
+export const PostList = ({isModalOpen, closeModal}: {isModalOpen: boolean, closeModal: () => void}) => {
+    const [enteredBody, setEnteredBody] = useState<string[]>([]) 
+    const [enteredAuthor, setEnteredAuthor] = useState<string[]>([]) 
 
-    const handleBodyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setEnteredBody(event.target.value)
+    const postCreatedHandler = ({author, body}: FormData) => {
+        setEnteredBody([...enteredBody, body])
+        setEnteredAuthor([...enteredAuthor, author])
     }
 
-    const handleAuthorChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
-        setEnteredAuthor(event.target.value)
-    }
-    
+
     return (
         <>
-        <Modal>
-            <NewPost onBodyChange={handleBodyChange} onAuthorChange={handleAuthorChange} />
-        </Modal>
-       
-        <ul className={classes.posts}>
-            <Post author={enteredAuthor} text={enteredBody}/>
-            <Post author='Smith' text={enteredAuthor}/>
+        {
+            isModalOpen && (
+                <Modal onModalClose={closeModal}>
+                    <NewPost onSubmit={postCreatedHandler} onClose={closeModal} />
+                </Modal>
+            )
+        }
+       { 
+        enteredAuthor.length > 0 ? (
+            <ul className={classes.posts}>
+            {
+                enteredAuthor.map((author, index) => (
+                    <Post author={author} text={enteredBody[index]}/>
+                ))
+            }
+            
         </ul>
+        ) : (
+            <h1 className={classes.emptyPosts}>No Posts Found</h1>
+        )
+       }
+       
         </>
     )
 }

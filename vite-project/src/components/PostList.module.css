@@ -8,3 +8,10 @@
     grid-template-columns: repeat(3, 30%);
     justify-content: center;
   }
+
+  .emptyPosts {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
