@@ -3,26 +3,25 @@ import classes from './NewPost.module.css'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schema, type FormData } from '../schemas/post.schema';
 import { Modal } from '../components/Modal';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreatePost } from '../hooks/usePosts';
 
-interface NewPostProps {
-    onSubmit: (data: FormData) => void
-    onClose: () => void
-}
-
-export default function NewPost({ onSubmit, onClose }: NewPostProps) {
+export default function NewPost() {
+    const navigation = useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema)
     })
 
+    const { mutate: createPost } = useCreatePost()
+
     const handleFormSubmit = (data: FormData) => {
-        onSubmit(data)
-        onClose()
+        createPost(data)
+        navigation('..')
     }
 
     return (
         <Modal>
-<form className={classes.form} onSubmit={handleSubmit(handleFormSubmit)}>
+        <form className={classes.form} onSubmit={handleSubmit(handleFormSubmit)}>
              <div>
                 <label htmlFor="author">Author</label>
                 <input type="text" id="author" required {...register('author')}/>

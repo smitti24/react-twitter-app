@@ -1,11 +1,11 @@
 import { Post } from "./Post"
 import classes from './PostList.module.css'
-import { useCreatePost, usePosts } from "../hooks/usePosts"
+import { usePosts } from "../hooks/usePosts"
 
 export const PostList = () => {
     const { data, isLoading, error } = usePosts()
     const posts = data?.posts ?? []
-    const { mutate: createPost, isPending } = useCreatePost()
+
 
     if (error) {
         return <p>Error: {error.message}</p>
@@ -14,7 +14,7 @@ export const PostList = () => {
     return (
         <>
         {
-            isLoading || isPending ? (
+            isLoading ? (
                 <h1 className={classes.emptyPosts}>Loading Posts...</h1>
             ): (
                 posts.length > 0 ? (
