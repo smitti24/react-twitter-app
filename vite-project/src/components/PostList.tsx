@@ -1,10 +1,8 @@
-import { NewPost } from "./NewPost"
 import { Post } from "./Post"
 import classes from './PostList.module.css'
-import { Modal } from "./Modal"
 import { useCreatePost, usePosts } from "../hooks/usePosts"
 
-export const PostList = ({isModalOpen, closeModal}: {isModalOpen: boolean, closeModal: () => void}) => {
+export const PostList = () => {
     const { data, isLoading, error } = usePosts()
     const posts = data?.posts ?? []
     const { mutate: createPost, isPending } = useCreatePost()
@@ -15,13 +13,6 @@ export const PostList = ({isModalOpen, closeModal}: {isModalOpen: boolean, close
 
     return (
         <>
-        {
-            isModalOpen && (
-                <Modal onModalClose={closeModal}>
-                    <NewPost onSubmit={createPost} onClose={closeModal} />
-                </Modal>
-            )
-        }
         {
             isLoading || isPending ? (
                 <h1 className={classes.emptyPosts}>Loading Posts...</h1>

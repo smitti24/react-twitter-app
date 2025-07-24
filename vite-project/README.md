@@ -67,3 +67,6 @@ export default tseslint.config([
   },
 ])
 ```
+
+// React router happens on the client side and not the server side.
+// App Router routes on the server and even caches routes.

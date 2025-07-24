@@ -1,15 +1,16 @@
-
 import { useForm } from 'react-hook-form';
 import classes from './NewPost.module.css'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schema, type FormData } from '../schemas/post.schema';
+import { Modal } from '../components/Modal';
+import { Link } from 'react-router-dom';
 
 interface NewPostProps {
     onSubmit: (data: FormData) => void
     onClose: () => void
 }
 
-export const NewPost = ({ onSubmit, onClose }: NewPostProps) => {
+export default function NewPost({ onSubmit, onClose }: NewPostProps) {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema)
     })
@@ -20,7 +21,8 @@ export const NewPost = ({ onSubmit, onClose }: NewPostProps) => {
     }
 
     return (
-        <form className={classes.form} onSubmit={handleSubmit(handleFormSubmit)}>
+        <Modal>
+<form className={classes.form} onSubmit={handleSubmit(handleFormSubmit)}>
              <div>
                 <label htmlFor="author">Author</label>
                 <input type="text" id="author" required {...register('author')}/>
@@ -34,8 +36,10 @@ export const NewPost = ({ onSubmit, onClose }: NewPostProps) => {
             </div>
            
 
-            <button type="button" onClick={onClose}>Close</button>
+            <Link type="button" to='..'>Close</Link>
             <button>Add Post</button>
         </form>
+        </Modal>
+        
     )
 }

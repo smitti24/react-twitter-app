@@ -1,7 +1,8 @@
 import classes from './MainHeader.module.css'
 import { MdMessage, MdPostAdd } from 'react-icons/md'
+ import { Link } from 'react-router-dom'
 
-export const MainHeader = ({ onCreatePost }: {onCreatePost: () => void}) => {
+export const MainHeader = () => {
     return (
         <>
             <header className={classes.header}>
@@ -10,10 +11,10 @@ export const MainHeader = ({ onCreatePost }: {onCreatePost: () => void}) => {
                     My Posts
                 </h1>
                 <p >
-                    <button className={classes.button} onClick={onCreatePost}>
+                    <Link className={classes.button} to='/create-posts'>
                         <MdPostAdd size={16}/>
                         Add New Post
-                    </button>
+                    </Link>
                 </p>
             </header>
         </>
